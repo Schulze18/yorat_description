@@ -1,0 +1,18 @@
+<launch>
+
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="verbose" value="true"/>
+		<arg name="world_name" value="$(find yorat_description)/worlds/yorat_empty.world"/>
+    <!-- more default parameters can be changed here -->
+	</include>
+
+	<!-- Spawn a robot into Gazebo -->
+	<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find yorat_description)/urdf/yorat.urdf -urdf -z 1 -model yorat"/>
+
+  	<!--param name="robot_description"
+    	command="$(find xacro)/xacro inorder '$(find yorat_description)/urdf/rrbot.xacro'"/-->
+
+    <!-- Spawn a robot into Gazebo -->
+	<!--node name="spawn_yorat_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param yorat_description -model my_yorat"/-->
+
+</launch>
