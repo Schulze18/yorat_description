@@ -12,14 +12,14 @@
         		xyz="0 0 0.03"
 				rpy="0 0 0"/>
       		<mass 
-      			value="0.200" />
+      			value="0.500" />
       		<inertia
-        		ixx="0.6"
-		        ixy="0"
-		        ixz="0"
-		        iyy="1.74"
-		        iyz="0"
-		        izz="2.02" />
+        		ixx="0.06"
+		        ixy="-0.0002364"
+		        ixz="-0.001197"
+		        iyy="0.17386"
+		        iyz="-0.00001544"
+		        izz="0.20296" />
 		</inertial>
 
 		<visual>
@@ -27,7 +27,7 @@
         		xyz="0 0 0"
 				rpy="0 0 0"/>
 	      	<geometry>
-	         	<box size="0.07 0.07 0.06"/>
+	         	<box size="0.07 0.07 0.04"/>
 	      	</geometry>
 		</visual>
 
@@ -36,7 +36,7 @@
         		xyz="0 0 0"
 				rpy="0 0 0"/>
 	      	<geometry>
-	         	<box size="0.07 0.07 0.06"/>
+	         	<box size="0.07 0.07 0.04"/>
 	      	</geometry>
 		</collision>
 	</link>
@@ -51,12 +51,12 @@
       		<mass 
       			value="0.1" />
       		<inertia
-        		ixx="0.01"
+        		ixx="0.002467"
 		        ixy="0"
 		        ixz="0"
-		        iyy="0.01"
+		        iyy="0.004411"
 		        iyz="0"
-		        izz="0.01" />
+		        izz="0.002467" />
 		</inertial>
 
 		<visual>
@@ -79,10 +79,10 @@
 	</link>
 
 	<!-- Right Wheel Joint -->
-	<joint name="base_right" type="continuous">
+	<joint name="base_right_joint" type="continuous">
 		<parent link="base_link"/>
 		<child link="right_wheel"/>
-    	<origin xyz="-0.02 -0.04 -0.02"
+    	<origin xyz="-0.02 -0.04 -0.01"
     		    rpy="1.57 0 0"/>
     	<axis xyz="0 0 -1" />
 	</joint>
@@ -98,12 +98,12 @@
       		<mass 
       			value="0.1" />
       		<inertia
-        		ixx="0.01"
+        		ixx="0.002467"
 		        ixy="0"
 		        ixz="0"
-		        iyy="0.01"
+		        iyy="0.004411"
 		        iyz="0"
-		        izz="0.01" />
+		        izz="0.002467" />
 		</inertial>
 
 		<visual>
@@ -126,12 +126,12 @@
 	</link>
 
 	<!-- Left Wheel Joint -->
-	<joint name="base_left" type="continuous">
+	<joint name="base_left_joint" type="continuous">
 		<parent link="base_link"/>
 		<child link="left_wheel"/>
-    	<origin xyz="-0.02 0.04 -0.02"
+    	<origin xyz="-0.02 0.04 -0.01"
     		    rpy="1.57 0 0"/>
-    	<axis xyz="0 0 1" />
+    	<axis xyz="0 0 -1" />
 	</joint>
 
 
@@ -143,14 +143,14 @@
         		xyz="0 0 0"
 				rpy="0 0 0"/>
       		<mass 
-      			value="0.05" />
+      			value="0.3" />
       		<inertia
-        		ixx="0.01"
+        		ixx="1.0001"
 		        ixy="0"
 		        ixz="0"
-		        iyy="0.01"
+		        iyy="1.0001"
 		        iyz="0"
-		        izz="0.01" />
+		        izz="1.0" />
 		</inertial>
 
 		<visual>
@@ -158,7 +158,7 @@
         		xyz="0 0 0"
 				rpy="0 0 0"/>
 	      	<geometry>
-	         	 <sphere radius="0.005"/>
+	         	 <box size="0.005 0.07 0.01"/> <!--sphere radius="0.0035"/-->
 	      	</geometry>
 		</visual>
 
@@ -167,16 +167,16 @@
         		xyz="0 0 0"
 				rpy="0 0 0"/>
 	      	<geometry>
-	         	 <sphere radius="0.005"/>
+	         	 <box size="0.005 0.07 0.01"/> <!--sphere radius="0.0035"/-->
 	      	</geometry>
 		</collision>
 	</link>
 
 	<!-- Caster Wheel Joint -->
-	<joint name="base_caster" type="fixed">
+	<joint name="base_caster_joint" type="fixed">
 		<parent link="base_link"/>
 		<child link="caster_wheel"/>
-    	<origin xyz="0.03 0 -0.035"
+    	<origin xyz="0.03 0 -0.025"
     		    rpy="0 0 0"/>
     	<axis xyz="0 0 0" />
 	</joint>
@@ -188,14 +188,55 @@
 
 	<gazebo reference="right_wheel">
 		<material>Gazebo/DarkGrey</material>
+		<mu1 value="1.0"/>
+			<mu2 value="1.0"/>
+			<kp value="10000000.0" />
+			<kd value="1.0" />
+			<fdir1 value="1 0 0"/>
 	</gazebo>
 
 	<gazebo reference="left_wheel">
 		<material>Gazebo/DarkGrey</material>
+		<mu1 value="1.0"/>
+			<mu2 value="1.0"/>
+			<kp value="10000000.0" />
+			<kd value="1.0" />
+			<fdir1 value="1 0 0"/>
 	</gazebo>
 
 	<gazebo reference="caster_wheel">
 		<material>Gazebo/DarkGrey</material>
+	</gazebo>
+
+	<!-- Left Wheel Transmission -->
+	<transmission name="left_wheel_transmission">
+	  	<type>transmission_interface/SimpleTransmission</type>
+	  	<joint name="base_left_joint">
+	    	<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>  
+	  	</joint>
+	  	<actuator name="left_wheel_actuator">
+		    <mechanicalReduction>1</mechanicalReduction>
+		    <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+	  	</actuator>
+	</transmission>
+ 
+	<!-- Right Wheel Transmission -->
+	<transmission name="right_wheel_transmission">
+	 	<type>transmission_interface/SimpleTransmission</type>
+	  	<joint name="base_right_joint">
+	    	<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>  
+	  	</joint>
+	  	<actuator name="right_wheel_actuator">
+	    	<mechanicalReduction>1</mechanicalReduction>
+	    	<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+	  	</actuator>
+	</transmission>
+
+
+	<gazebo>
+  		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    		<legacyModeNS>true</legacyModeNS>
+  		</plugin>
 	</gazebo>
 
 </robot>
