@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+
+<robot name="yorat" xmlns:xacro="http://ros.org/wiki/xacro">
+
+
+	<!-- Include file with robot's parameters-->
+	<xacro:include filename="$(find yorat_description)/urdf/parameters.xacro"/>
+	
+	
+	<!-- Yorat Base -->
+	<xacro:include filename="$(find yorat_description)/urdf/base.urdf.xacro"/>
+
+
+	<!-- Yorat Wheel -->
+	<xacro:include filename="$(find yorat_description)/urdf/wheel.urdf.xacro"/>
+
+
+	<xacro:yorat_base name="base">
+	</xacro:yorat_base>
+
+
+	<xacro:yorat_wheel wheel_prefix="left">
+   		<origin xyz="${wheel_x_pos} ${base_y_size/2 + wheel_length/2} ${-(base_z_size/2 - wheel_radius + base_z_offset)}" rpy="${PI/2} 0 0" />
+  	</xacro:yorat_wheel>
+
+  	<xacro:yorat_wheel wheel_prefix="right">
+    	<origin xyz="${wheel_x_pos} -${base_y_size/2 + wheel_length/2} ${-(base_z_size/2 - wheel_radius + base_z_offset)}" rpy="${PI/2} 0 0" />
+	</xacro:yorat_wheel>
+
+
+	<gazebo>
+  		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    		<legacyModeNS>true</legacyModeNS>
+  		</plugin>
+	</gazebo>
+
+</robot>

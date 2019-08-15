@@ -214,11 +214,13 @@
 	  	<joint name="base_left_joint">
 	    	<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>  
 	  	</joint>
+
 	  	<actuator name="left_wheel_actuator">
 		    <mechanicalReduction>1</mechanicalReduction>
 		    <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
 	  	</actuator>
 	</transmission>
+ 
  
 	<!-- Right Wheel Transmission -->
 	<transmission name="right_wheel_transmission">
@@ -226,6 +228,7 @@
 	  	<joint name="base_right_joint">
 	    	<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>  
 	  	</joint>
+
 	  	<actuator name="right_wheel_actuator">
 	    	<mechanicalReduction>1</mechanicalReduction>
 	    	<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
