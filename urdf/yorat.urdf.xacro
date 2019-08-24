@@ -35,4 +35,16 @@
   		</plugin>
 	</gazebo>
 
+
+	 <xacro:include filename="$(find yorat_description)/urdf/accessories/sick_lms1xx_mount.urdf.xacro" />
+	 <sick_lms1xx_mount prefix="$(optenv JACKAL_LASER_MOUNT front)"
+                       topic="$(optenv JACKAL_LASER_TOPIC front/scan)"/>
+
+    <joint name="$(optenv JACKAL_LASER_MOUNT front)_laser_mount_joint" type="fixed">
+      <origin xyz="0 0 0"
+              rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="$(optenv JACKAL_LASER_MOUNT front)_laser_mount" />
+	</joint>
+
 </robot>
